@@ -1,0 +1,34 @@
+Tree的path问题
+
+回溯的形式，
+path    vector<int> 
+result vect<vector<int>>
+
+如果引用传递，则
+
+二叉树，从根节点开始，拿到左右path
+DFS 
+
+Get all the paths(always starts from the root) int a binary tree, whose sum would be equal to given value
+
+Get all the paths(always starts from the root and ends at leaf) in a binary tree,whose ...
+
+
+Tree 与其他数据结构转化 
+convert a binary tree to linked lists, Each linked list is corrspondent to all the nodes at the same level.
+
+1 queue 遍历
+2 层层的分隔符，？分隔符怎么做呢？
+
+
+sorted Array to balanced binary search tree
+如果对平衡二叉树做中序遍历，容易得到一个sorted array ，但是反过来怎么做？
+
+
+寻找特定节点
+此类题目通常会传入一个当前你节点，要求找到与此节点具有一定关系的特定节点，例如前驱，后继，左右兄弟
+了解一下常见特定节点的定义和性质。在存在父节点指针的情况下，通常可以由当前节点出发，向上倒退解决。如果节点没有父节点指针
+，一般需要从根节点出现向下搜索， 搜索的过程就是DFS 深度优先
+
+
+问题：in-order traverse a binary search tree with parent links, find the next node to visit given a specific node. 

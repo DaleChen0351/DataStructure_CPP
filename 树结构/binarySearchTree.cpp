@@ -4,11 +4,11 @@ using namespace std;
 template<class Type>
 void BstNode<Type>::display(int i)
 {
-    cout << "posistion = " << i << "    key = " << this->data.key << endl;
-    if(this->lchild != NULL)
-        this->lchild->display(2 * i);
-    if(this->rchild != NULL)
-        this->rchild->display(2 * i + 1);
+        cout << "posistion = " << i << "    key = " << this->data.key << endl;
+        if (this->lchild != NULL)
+            this->lchild->display(2 * i);
+        if (this->rchild != NULL)
+            this->rchild->display(2 * i + 1);
 }
 
 

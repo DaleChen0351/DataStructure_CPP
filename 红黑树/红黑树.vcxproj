@@ -131,6 +131,7 @@
   <ItemGroup>
     <Image Include="红黑树原理.png" />
     <Image Include="红黑树定义.png" />
+    <Image Include="红黑树左旋右旋测试.png" />
     <Image Include="红黑树的插入.png" />
   </ItemGroup>
   <ItemGroup>

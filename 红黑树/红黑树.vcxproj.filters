@@ -34,6 +34,9 @@
     <Image Include="红黑树的插入.png">
       <Filter>资源文件</Filter>
     </Image>
+    <Image Include="红黑树左旋右旋测试.png">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RedBlackTree.h">

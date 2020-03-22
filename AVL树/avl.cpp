@@ -67,7 +67,7 @@ Node* insert(Node* node, int key)
    //第一个节点
     if (node == NULL)
         return (newNode(key));
-    // 先处理左或者右边的子节点，再考虑本节点的
+    // 先处理左或者右边的子节点，再考虑本节点的(从下到上遍历检查是否是平衡的
     if (key < node->key)
     {
         node->left = insert(node->left, key);

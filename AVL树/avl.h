@@ -29,4 +29,6 @@ void preOrder(Node* root);
 
 void inOrder(Node* root);
 
+Node* minValueNode(Node* node);
+
 

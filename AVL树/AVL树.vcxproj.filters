@@ -15,34 +15,20 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="AVL树.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="avl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="笔记.txt">
-      <Filter>资源文件</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="红黑树原理.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="红黑树定义.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="红黑树的插入.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="红黑树左旋右旋测试.png">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="AVL树-印度老师.png">
-      <Filter>资源文件</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="RedBlackTree.h">
+    <ClInclude Include="avl.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,0 +1,16 @@
+AVL树的特点
+    1 it is a BST 二叉搜索树   binary search tree
+    2 balance factor = abs(height of left subtree) - abs(height of right subtree) = 0 - 1 1 。所有节点都满足balance factor 
+
+旋转的真正含义
+    在于在符合BST的原则下，进行结构上的变化，从而满足balance factor的要求。目的在于，避免二叉树的退化，加快搜索的速度。
+
+左旋和右旋
+    旋转之后要求保证树（子树）仍然是一棵 二叉搜索树（节点和子树之间的大小关系满足。。。）
+
+先右旋再左旋
+
+simply shortcut
+
+1 the median element would always be the root and remaining element would be children of that element
+2 从下到上计算balance factor，找出不平衡的点，旋转使之平衡

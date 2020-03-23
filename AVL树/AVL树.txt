@@ -1,20 +1,42 @@
 
-AVL目的
-AVL树的特点
+# AVL树的特点
     1 it is a BST 二叉搜索树   binary search tree
     2 balance factor = abs(height of left subtree) - abs(height of right subtree) = 0 - 1 1 。所有节点都满足balance factor 
 
-旋转的真正含义
+# 旋转含义
     1 在于在符合BST的原则下，进行结构上的变化，从而满足balance factor的要求。目的在于，避免二叉树的退化，加快搜索的速度。
     2 时间复杂度O(1) 相当于是常数时间内就可以完成
     3 在变化前后，对树采用中序遍历，结果是一致的。换句话说，旋转变化不影响BST的大小特性
-左旋和右旋
-    旋转之后要求保证树（子树）仍然是一棵 二叉搜索树（节点和子树之间的大小关系满足。。。）
+    左旋和右旋
+        旋转之后要求保证树（子树）仍然是一棵 二叉搜索树（节点和子树之间的大小关系满足。。。）
 
-先右旋再左旋
+        simply shortcut
 
-simply shortcut
+# Insertion
+    1 Insert would be same BST
+    2 
 
+# Deletion
+    1 Delet data would be same as BST
+    2 After deletion, need to Check each node's balance factor again
+        if not balanced, have to use rotate function again (LL RR RL LR)
+
+# delteion
+To make sure that the given tree remains AVL after every deletion, we must augment the standard BST delete operation 
+to perform some re-balancing. 
+    1 当删除的节点有两个子树时候，替代(原位置上的替代）被删除的节点有两种方式。
+        a  in order predecessor: would be the largest element from the left subtree of the deleted node
+        b in order successor:  would be the smallest element from the right subtree of the deleted node
+    2 从被删除的节点开始向上遍历，发现第一个不平衡的节点
+    3 注意，修正第一个不平衡的节点，不代表AVL树已经平衡。因此还需要继续修正这个不平衡节点的各级祖先节点。
+
+# bottom up of all ancestors
+After deletion, we got pointers to all ancestors one by one in bottom up manner. So we dont need parent pointer
+to traval up. The recursive code itself travels up and visits all the ancestors of the deleted node.
+
+
+
+# MIT AVL tree and AVL sort
 1 the median element would always be the root and remaining element would be children of that element
 2 从下到上计算balance factor，找出不平衡的点，旋转使之平衡
 3 目的在于 keep the height order logn
@@ -24,5 +46,3 @@ simply shortcut
 7 步骤
     1 simple BST insert
     2 fix AVL property 
-
-    

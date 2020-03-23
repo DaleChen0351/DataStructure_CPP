@@ -31,4 +31,5 @@ void inOrder(Node* root);
 
 Node* minValueNode(Node* node);
 
+Node* deleteNode(Node* root, int key);
 

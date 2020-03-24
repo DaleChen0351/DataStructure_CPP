@@ -44,5 +44,5 @@ void test_delete()
 
 int main()
 {
-    test_delete();
+    test_insert();
 }

@@ -126,7 +126,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="笔记.txt" />
+    <Text Include="红黑树笔记.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="AVL树-印度老师.png" />

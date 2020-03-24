@@ -3,7 +3,7 @@ using namespace std;
 int height(Node * n)
 {
     if (n == NULL)
-        return 0;
+        return -1;
 
     return n->height;
 }
@@ -19,7 +19,7 @@ Node * newNode(int key)
     newNode->key = key;
     newNode->left = NULL;
     newNode->right = NULL;
-    newNode->height = 1;
+    newNode->height = 0;
 
     return newNode;
 }
@@ -231,7 +231,7 @@ Node* deleteNode(Node* root, int key)
     if (balance < -1 && getBalanceFactor(root->right)>0)
     {
         root->right = rightRotate(root->right);
-        leftRotate(root);
+        return leftRotate(root);
     }
     //删除节点后依然是平衡的，不需要旋转
     return root;

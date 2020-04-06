@@ -23,13 +23,17 @@ Node* leftRotate(Node* x);
 
 int getBalanceFactor(Node* n);
 
-Node* insert(Node* node, int key);
+Node* minValueNode(Node* node);
+
+Node* insertNode(Node* node, int key);
+
+Node* deleteNode(Node* node, int key);
 
 void preOrder(Node* root);
 
 void inOrder(Node* root);
 
-Node* minValueNode(Node* node);
 
-Node* deleteNode(Node* root, int key);
+
+
 

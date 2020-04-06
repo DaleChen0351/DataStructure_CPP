@@ -1,9 +1,10 @@
 #include "avl.h"
 using namespace std;
+
 int height(Node * n)
 {
     if (n == NULL)
-        return -1;
+        return 0;
 
     return n->height;
 }
@@ -19,7 +20,7 @@ Node * newNode(int key)
     newNode->key = key;
     newNode->left = NULL;
     newNode->right = NULL;
-    newNode->height = 0;
+    newNode->height = 1;
 
     return newNode;
 }
@@ -35,7 +36,6 @@ Node * rightRotate(Node * y)
     y->height = max(height(y->left), height(y->right)) + 1;
     x->height = max(height(x->left), height(x->right)) + 1;
     return x;
-   
 }
 
 Node * leftRotate(Node * x)
@@ -52,29 +52,40 @@ Node * leftRotate(Node * x)
     return y;
 }
 
-int getBalanceFactor(Node * n)
+int getBalanceFactor(Node * node)
 {
-    if (n == NULL)
+    if (node == NULL)
     {
         return 0;
     }
-    return height(n->left) - height(n->right);
+    return height(node->left) - height(node->right);
 }
 
-Node* insert(Node* node, int key)
+Node * minValueNode(Node * node)
 {
-// BST的标准插入操作
-   //第一个节点
+    Node* curNode = node;
+    // loop down to find the leftmost leaf.
+    while (curNode->left != NULL)
+    {
+        curNode = curNode->left;
+    }
+    return curNode;//找到了  in order successor
+}
+
+Node* insertNode(Node* node, int key)
+{
+// standard BST insert operation
+   // leaf node insert (first leaf node is root node )
     if (node == NULL)
         return (newNode(key));
-    // 先处理左或者右边的子节点，再考虑本节点的(从下到上遍历检查是否是平衡的
+
     if (key < node->key)
     {
-        node->left = insert(node->left, key);
+        node->left = insertNode(node->left, key);
     }
     else if(key > node->key)
     {
-        node->right = insert(node->right, key);
+        node->right = insertNode(node->right, key);
     }
     else// BST树中不能有相同的键值
     {
@@ -82,10 +93,10 @@ Node* insert(Node* node, int key)
     }
 // 更新本节点的高度
     node->height = 1 + max(height(node->left), height(node->right));
-// 计算balance factor 并且去检查这个节点是否是平衡的
+// 计算balance factor 
     int balancefactor = getBalanceFactor(node);
 
-// 四种情况分别讨论
+// check and fix the balance Factor
     //LL
     if (balancefactor > 1 && key < node->left->key)
     {
@@ -108,7 +119,99 @@ Node* insert(Node* node, int key)
         node->right = rightRotate(node->right);
         return leftRotate(node);
     }
+    // after insert node, the avl tree is still balanced, so re-balance not needed
+    return node;
+}
 
+Node* deleteNode(Node* node, int key)
+{
+    //数的根为空节点
+    if (node == NULL)
+    {
+        return node;
+    }
+    // find the postion of deleted node
+    if (key < node->key)
+    {
+        node->left = deleteNode(node->left, key);
+    }
+    else if (key > node->key)
+    {
+        node->right = deleteNode(node->right, key);
+    }
+    // find it ,delete it 
+    else
+    {
+        // 被删除的节点有至多一个子节点
+        if (node->left == NULL || node->right == NULL)
+        {
+            Node* temp = node->left ? node->left : node->right;
+            // No child;
+            if (temp == NULL)
+            {
+                temp = node;
+                node = NULL;
+            }
+            else
+            {
+                *node = *temp;
+            }
+            free(temp);
+
+        }
+        // 被删除的节点有两个子节点
+        else
+        {
+            // node with two children : Get the inorder
+                // successor (smallest in the right subtree)  
+            Node* temp = minValueNode(node->right);
+
+            // Copy the inorder successor's  
+            // data to this node  
+            node->key = temp->key;
+
+            // Delete the inorder successor  
+            node->right = deleteNode(node->right,
+                temp->key);
+        }
+
+    }
+
+    // If the tree had only one node 
+        // then return  
+    if (node == NULL)
+        return node;
+
+    // Update 当前节点的高度
+    node->height = max(height(node->left), height(node->right)) + 1;
+
+    // 计算balance factor
+    int balance = getBalanceFactor(node);
+
+    // 根据计算结果旋转平衡
+        //left left
+    if (balance > 1 && getBalanceFactor(node->left) >= 0)// 注意这里的等于号，当有多条路径都可以实现balance > 1时，优先考虑left left，因为这个等号造成的
+    {
+        return rightRotate(node);
+    }
+    //rightright
+    if (balance < -1 && getBalanceFactor(node->right) <= 0)
+    {
+        return leftRotate(node);
+    }
+    // left right
+    if (balance > 1 && getBalanceFactor(node->left) < 0)
+    {
+        node->left = leftRotate(node->left);
+        return rightRotate(node);
+    }
+    //right left
+    if (balance < -1 && getBalanceFactor(node->right)>0)
+    {
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
+    }
+    //删除节点后依然是平衡的，不需要旋转
     return node;
 }
 
@@ -130,110 +233,5 @@ void inOrder(Node * root)
     inOrder(root->left);
     cout << root->key << " ";
     inOrder(root->right);
-}
-
-Node * minValueNode(Node * node)
-{
-    Node* curNode = node;
-    // loop down to find the leftmost leaf.
-    while (curNode->left!=NULL)
-    {
-        curNode = curNode->left;
-    }
-    return curNode;//找到了  in order successor
-}
-
-Node* deleteNode(Node* root, int key)
-{
-    //数的根为空节点
-    if (root == NULL)
-    {
-        return root;
-    }
-    // find the postion of deleted node
-    if (key < root->key)
-    {
-        root->left = deleteNode(root->left, key);
-    }
-    else if (key > root->key)
-    {
-        root->right = deleteNode(root->right, key);
-    }
-    // find it ,delete it 
-    else
-    {
-        // 被删除的节点有至多一个子节点
-        if (root->left == NULL || root->right == NULL)
-        {
-            Node* temp = root->left ? root->left : root->right;
-            // No child;
-            if (temp == NULL)
-            {
-                temp = root;
-                root = NULL;
-            }
-            else
-            {
-                *root = *temp;
-            }
-            free(temp);
-
-        }
-        // 被删除的节点有两个子节点
-        else
-        {
-            // node with two children : Get the inorder
-                // successor (smallest in the right subtree)  
-            Node* temp = minValueNode(root->right);
-
-            // Copy the inorder successor's  
-            // data to this node  
-            root->key = temp->key;
-
-            // Delete the inorder successor  
-            root->right = deleteNode(root->right,
-                temp->key);
-        }
-
-
-
-    }
-
-    // If the tree had only one node 
-        // then return  
-    if (root == NULL)
-        return root;
-
-    // Update 当前节点的高度
-    root->height = max(height(root->left), height(root->right)) + 1;
-
-    // 计算balance factor
-    int balance = getBalanceFactor(root);
-
-    // 根据计算结果旋转平衡
-        //left left
-    if (balance > 1 && getBalanceFactor(root->left) >= 0)// 注意这里的等于号，当有多条路径都可以实现balance > 1时，优先考虑left left，因为这个等号造成的
-    {
-        return rightRotate(root);
-    }
-    //rightright
-    if (balance < -1 && getBalanceFactor(root->right) <= 0)
-    {
-        return leftRotate(root);
-    }
-    // left right
-    if (balance > 1 && getBalanceFactor(root->left) < 0)
-    {
-        root->left = leftRotate(root->left);
-        return rightRotate(root);
-    }
-    //right left
-    if (balance < -1 && getBalanceFactor(root->right)>0)
-    {
-        root->right = rightRotate(root->right);
-        return leftRotate(root);
-    }
-    //删除节点后依然是平衡的，不需要旋转
-    return root;
 }
 

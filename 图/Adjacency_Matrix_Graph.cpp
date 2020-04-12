@@ -49,7 +49,7 @@ Status CreateUDN(AMGraph &G)
     cout << "请输入边和权值：" << endl;
     for (int k = 0; k < G.arcnum; k++)
     {
-        cin >> 
+        
     }
-
+    return true;
 }
